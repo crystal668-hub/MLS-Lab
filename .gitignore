@@ -22,7 +22,6 @@
 *.html
 *_report.md
 /report.md
-/README.md
 
 # Runtime logs and traces
 *.log
