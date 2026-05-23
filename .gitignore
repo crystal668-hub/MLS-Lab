@@ -1,0 +1,29 @@
+# Local environments and caches
+/.cache/
+/.venv/
+/__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Editor-local settings
+/.vscode/
+
+# Generated lab artifacts grouped by lab
+/lab_artifacts/
+
+# Generated outputs if scripts are run again
+/results/
+/models/
+/temp/
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.html
+*_report.md
+/report.md
+/README.md
+
+# Runtime logs and traces
+*.log
+*.jsonl
