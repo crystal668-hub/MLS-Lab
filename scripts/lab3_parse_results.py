@@ -249,14 +249,26 @@ def read_kv_peak_tokens(kv_trace_dir: Path | None) -> dict[str, float]:
     return {strategy: statistics.median(values) for strategy, values in peaks.items()}
 
 
-def save_cdf(values_by_label: dict[str, list[float]], title: str, xlabel: str, path: Path) -> None:
+def save_cdf(
+    values_by_label: dict[str, list[float]],
+    title: str,
+    xlabel: str,
+    path: Path,
+    xlim_percentile: float | None = None,
+) -> None:
     plt.figure(figsize=(6, 4))
+    all_values: list[float] = []
     for label, values in values_by_label.items():
         values = sorted(x for x in values if x is not None)
         if not values:
             continue
+        all_values.extend(values)
         y = [(idx + 1) / len(values) for idx in range(len(values))]
         plt.plot(values, y, label=label)
+    if xlim_percentile is not None and all_values:
+        upper = percentile(all_values, xlim_percentile)
+        if upper is not None:
+            plt.xlim(left=0, right=upper)
     plt.xlabel(xlabel)
     plt.ylabel("CDF")
     plt.title(title)
@@ -287,6 +299,7 @@ def save_task3_plots(rows: list[dict[str, Any]], output_dir: Path) -> None:
         "Task 3: ITL CDF by scheduler",
         "ITL (ms)",
         figures / "task3_itl_cdf.png",
+        xlim_percentile=99.5,
     )
 
 
